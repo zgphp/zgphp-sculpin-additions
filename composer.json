@@ -11,7 +11,8 @@
   ],
   "require": {
     "php": ">=5.4",
-    "mikehaertl/php-shellcommand": "1.0.*"
+    "mikehaertl/php-shellcommand": "1.0.*",
+    "cocur/slugify": "1.0.*"
   },
   "autoload": {
     "psr-0": { "Zgphp\\Sculpin\\Bundle\\ZgphpSculpinAdditionsBundle": "" }
