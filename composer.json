@@ -1,0 +1,21 @@
+{
+  "name": "zgphp/zgphp-sculpin-additions",
+  "description": "Expansion power pack to make our life easier",
+  "keywords": ["sculpin", "posts", "vimeo", "meetup", "publish"],
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Luka Muzinic",
+      "homepage": "http://luka.muzinic.net"
+    }
+  ],
+  "require": {
+    "php": ">=5.4",
+    "mikehaertl/php-shellcommand": "1.0.*"
+  },
+  "autoload": {
+    "psr-0": { "Zgphp\\Sculpin\\Bundle\\ZgphpSculpinAdditionsBundle": "" }
+  },
+  "target-dir": "Zgphp/Sculpin/Bundle/ZgphpSculpinAdditionsBundle",
+  "minimum-stability": "beta"
+}
