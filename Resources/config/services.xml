@@ -4,7 +4,7 @@
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
   <parameters>
-    <parameter key="sculpin_meetup_next_event.service.class">Lmuzinic\Sculpin\Bundle\MeetupNextEventBundle\Service\Meetup</parameter>
+    <parameter key="sculpin_meetup_next_event.service.class">Zgphp\Sculpin\Bundle\ZgphpSculpinAdditionsBundle\Service\Meetup</parameter>
   </parameters>
 
   <services>
