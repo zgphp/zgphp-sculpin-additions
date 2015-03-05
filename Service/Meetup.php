@@ -40,6 +40,7 @@ class Meetup implements EventSubscriberInterface
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_HEADER, false);
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
         $json = curl_exec($ch);
         curl_close($ch);
 
