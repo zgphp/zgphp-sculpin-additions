@@ -3,15 +3,20 @@
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
-  <parameters>
-    <parameter key="sculpin_meetup_next_event.service.class">Zgphp\Sculpin\Bundle\ZgphpSculpinAdditionsBundle\Service\Meetup</parameter>
-  </parameters>
+    <parameters>
+        <parameter key="sculpin_meetup_next_event.service.class">Zgphp\Sculpin\Bundle\ZgphpSculpinAdditionsBundle\Service\Meetup</parameter>
+        <parameter key="sculpin_meetup_next_event.publish.class">Zgphp\Sculpin\Bundle\ZgphpSculpinAdditionsBundle\Command\PublishCommand</parameter>
+    </parameters>
 
-  <services>
-    <service id="sculpin_meetup_next_event.service" class="%sculpin_meetup_next_event.service.class%">
-      <argument type="service" id="sculpin.site_configuration" />
-      <tag name="kernel.event_subscriber" />
-    </service>
-  </services>
+    <services>
+        <service id="sculpin_meetup_next_event.service" class="%sculpin_meetup_next_event.service.class%">
+            <argument type="service" id="sculpin.site_configuration"/>
+            <tag name="kernel.event_subscriber"/>
+        </service>
+        <service id="sculpin_meetup_next_event.command.publish" class="%sculpin_meetup_next_event.publish.class%">
+            <argument type="service" id="sculpin.site_configuration"/>
+            <tag name="console.command"/>
+        </service>
+    </services>
 
 </container>

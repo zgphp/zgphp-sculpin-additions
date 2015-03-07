@@ -11,12 +11,13 @@ use Symfony\Component\Console\Input\ArrayInput;
 
 class PublishCommand extends Command
 {
+    protected $configuration;
+
     protected function configure()
     {
         $this
             ->setName('publish')
-            ->setDescription('Publish to production. Production being whatever is aliased as zgphp in .ssh/config')
-        ;
+            ->setDescription('Publish to production');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -24,6 +25,12 @@ class PublishCommand extends Command
         if ($this->getApplication()->getKernel()->getEnvironment() !== 'prod') {
             throw new \ErrorException('Run in production mode!');
         }
+
+        /**
+         * when Sculpin updates to Symfony 2.4 do
+         * http://symfony.com/doc/current/cookbook/console/commands_as_services.html
+         */
+        $this->configuration = $this->getApplication()->getKernel()->getContainer()->get('sculpin.site_configuration');
 
         $projectDir = $this->getApplication()->getKernel()->getContainer()->getParameter('sculpin.project_dir');
 
@@ -41,7 +48,13 @@ class PublishCommand extends Command
 
         $command->run($input, $output);
 
-        $shellCommand = new \mikehaertl\shellcommand\Command('rsync -rv ' . $outputDir . DIRECTORY_SEPARATOR . '* zgphp:www/');
+        $destinationServer = $this->configuration->get('destination_server') ? $this->configuration->get('destination_server') : getenv('DESTINATION_SERVER');
+        $destinationDirectory = $this->configuration->get('destination_directory') ? $this->configuration->get('destination_directory') : getenv('DESTINATION_DIRECTORY');
+
+        $shellCommand = new \mikehaertl\shellcommand\Command(
+            'rsync -rv ' . $outputDir . DIRECTORY_SEPARATOR . '* ' . $destinationServer . ':' . $destinationDirectory
+        );
+
         if ($shellCommand->execute()) {
             $output->writeln($shellCommand->getOutput());
         } else {
