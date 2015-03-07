@@ -23,7 +23,7 @@ class Meetup implements EventSubscriberInterface
 
     public function beforeRun(SourceSetEvent $sourceSetEvent)
     {
-        $key = $this->configuration->get('meetup_api_key');
+        $key = $this->configuration->get('meetup_api_key') ? $this->configuration->get('meetup_api_key') : getenv('MEETUP_API_KEY');
 
         $query = [
             "sign" => true,
