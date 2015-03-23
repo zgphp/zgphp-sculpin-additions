@@ -23,6 +23,17 @@ class Meetup implements EventSubscriberInterface
 
     public function beforeRun(SourceSetEvent $sourceSetEvent)
     {
+        $meetupInfoExists = (
+            !empty($this->configuration->get('meetup')) &&
+            !empty($this->configuration->get('meetup_time')) &&
+            !empty($this->configuration->get('meetup_map_url')) &&
+            !empty($this->configuration->get('meetup_venue_name')) &&
+            !empty($this->configuration->get('meetup_venue_address')) &&
+            !empty($this->configuration->get('meetup_event_url'))
+        );
+
+        if ($meetupInfoExists) return;
+
         $key = $this->configuration->get('meetup_api_key') ? $this->configuration->get('meetup_api_key') : getenv('MEETUP_API_KEY');
 
         $query = [
