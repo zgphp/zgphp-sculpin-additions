@@ -10,7 +10,7 @@
     }
   ],
   "require": {
-    "php": ">=5.4",
+    "php": ">=5.5",
     "mikehaertl/php-shellcommand": "1.0.*",
     "cocur/slugify": "1.0.*"
   },
