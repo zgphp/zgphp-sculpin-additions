@@ -74,14 +74,15 @@ class Meetup implements EventSubscriberInterface
 
         $meetup = $data->results[0];
 
-        $time = date("d.m.Y @ H:i", $meetup->time / 1000);
+
         $address = urlencode($meetup->venue->address_1);
         $city = urlencode($meetup->venue->city);
         $lat = $meetup->venue->lat;
         $lon = $meetup->venue->lon;
         $mapURL = "https://www.google.com/maps/place/$address,+$city,+Croatia/@$lat,$lon,17z";
 
-        $time = date("d.m.Y @ H:i", $meetup->time / 1000);
+        $localTimeOffset = date("I") ? 2 : 1; // check if DST is in effect
+        $time = date("d.m.Y @ H:i", $meetup->time / 1000 + 60 * 60 * $localTimeOffset);
 
         $this->configuration->set('meetup', $meetup->name);
         $this->configuration->set('meetup_time', $time);
