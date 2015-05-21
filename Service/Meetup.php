@@ -5,6 +5,8 @@ namespace Zgphp\Sculpin\Bundle\ZgphpSculpinAdditionsBundle\Service;
 use Sculpin\Core\Sculpin;
 use Sculpin\Core\Event\SourceSetEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use DateTime;
+use DateTimeZone;
 
 class Meetup implements EventSubscriberInterface
 {
@@ -81,11 +83,11 @@ class Meetup implements EventSubscriberInterface
         $lon = $meetup->venue->lon;
         $mapURL = "https://www.google.com/maps/place/$address,+$city,+Croatia/@$lat,$lon,17z";
 
-        $localTimeOffset = date("I") ? 2 : 1; // check if DST is in effect
-        $time = date("d.m.Y @ H:i", $meetup->time / 1000 + 60 * 60 * $localTimeOffset);
+        $time = DateTime::createFromFormat("U", $meetup->time / 1000, new \DateTimeZone('UTC'));
+        $time->setTimeZone(new DateTimeZone('Europe/Zagreb'));
 
         $this->configuration->set('meetup', $meetup->name);
-        $this->configuration->set('meetup_time', $time);
+        $this->configuration->set('meetup_time', $time->format("d.m.Y @ H:i"));
         $this->configuration->set('meetup_map_url', $mapURL);
         $this->configuration->set('meetup_venue_name', $meetup->venue->name);
         $this->configuration->set('meetup_venue_address', $meetup->venue->address_1);
