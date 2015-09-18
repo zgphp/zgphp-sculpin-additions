@@ -65,7 +65,7 @@ class CreateVideoCommand extends Command
         file_put_contents(
             $sourceDir . DIRECTORY_SEPARATOR . "_videos" . DIRECTORY_SEPARATOR . $filename,
             '---' . PHP_EOL .
-            'title: ' . $data->title . PHP_EOL .
+            'title: "' . $data->title . '"' . PHP_EOL .
             'vimeo_id: ' . $videoId . PHP_EOL .
             'image: ' . $data->thumbnail_large . PHP_EOL .
             '---' . PHP_EOL .
